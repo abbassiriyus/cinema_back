@@ -3,11 +3,19 @@ const app = express()
 const connectDB = require('./config/database.js')
 const userRouter = require('./routes/CostomerSchemaRouter.js')
 const cors = require('cors')
+const bodyParser = require('body-parser');
+const fileUpload = require("express-fileupload");
 
-var cookieParser = require('cookie-parser');
-const jsonParser = express.json();
-var multer      = require('multer'); 
+// var cookieParser = require('cookie-parser');
+// const jsonParser = express.json();
+// var multer= require('multer'); 
 connectDB()
+
+
+app.use(fileUpload())
+// Body parser middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
@@ -27,8 +35,8 @@ app.use(function (req, res, next) {
     next();
 });
 app.use(cors({origin: '*'}))
-app.use(cookieParser());
-app.use(jsonParser)
+// app.use(cookieParser());
+// app.use(jsonParser)
 
 // Главная
 app.get('/', (_req, res) => {
