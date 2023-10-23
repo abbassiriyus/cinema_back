@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+    .link{
+        background-color: brown;
+        height: 40px;
+        font-size: 23px;
+        color: white;
+        text-align: center;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+    .cards{
+        display: flex;
+        justify-content: space-around;
+        align-items: stretch;
+       
+    }
+    .card{
+        width: 300px; 
+        box-shadow: 0px 0px 3px rgba(128, 128, 128, 0.459);
+    
+    }
+    li{
+        font-size: 13px;
+    }
+</style>
+</head>
+<body>
+    
+<div class="cards">
+    <div class="card">
+        <div class="link">/users</div>
+        bu api faqat superdamin uchun, keyinchalik faqat superadmin true bo`lgan foydalanuvchiga ishlaydi holos
+        <pre>
+"email" VARCHAR (50),
+"password" text,
+"ptichka" boolean default false not null,
+"name" text,
+"token" text, 
+unique(email),
+"superadmin" boolean,
+        </pre>
+        <span>GET,POST,PUT,DELETE</span>
+        <ul>
+            <li>ptichka- ptichkali userla bor ekan</li>
+            <li>superadmin - superadmin true bo`lsa u saytdagi hamma malumotni o`zgartria oladi</li>
+            <li>password-parolni shifrlangani</li>
+            <li>token-userga berilgan token</li>
+            <li>email- bitta email bir marta ishlatiladi holos </li>
+        </ul>
+    </div>
+<div class="card">
+    <div class="link">/user</div>
+<span>delete,get va put methodi bor. tokeni orqali aynan uni kimligini topib ish bajaradi</span>
+    <div class="link">/login</div>
+    <span>email password token beradi</span>
+    <div class="link">/register</div>
+<span>email,password,name yuboriladi token ham yubordim</span>
+
+</div>
+</div>
+
+
+
+
+
+
+
+</body>
+</html>

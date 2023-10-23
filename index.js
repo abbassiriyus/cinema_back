@@ -5,7 +5,7 @@ const userRouter = require('./routes/CostomerSchemaRouter.js')
 const cors = require('cors')
 const bodyParser = require('body-parser');
 const fileUpload = require("express-fileupload");
-
+const fs=require('fs')
 
 
 app.use(fileUpload())
@@ -39,6 +39,11 @@ app.get('/', (_req, res) => {
   res.status(200).json({
     message: 'ping',
   })
+})
+app.get('/doc', (_req, res) => {
+  const data = fs.readFileSync('./uploads/index.html',
+  { encoding: 'utf8', flag: 'r' });
+res.status(200).send(data)
 })
 
 
