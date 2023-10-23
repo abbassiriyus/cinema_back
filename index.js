@@ -6,10 +6,6 @@ const cors = require('cors')
 const bodyParser = require('body-parser');
 const fileUpload = require("express-fileupload");
 
-// var cookieParser = require('cookie-parser');
-// const jsonParser = express.json();
-// var multer= require('multer'); 
-connectDB()
 
 
 app.use(fileUpload())
