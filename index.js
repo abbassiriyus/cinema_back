@@ -50,7 +50,7 @@ app.get('/', (_req, res) => {
 app.use('/',userRouter)
 
 
-app.listen(3000, () => {
+app.listen(4001, () => {
     console.log('Сервер запущен')
     console.log('server started')
   })
