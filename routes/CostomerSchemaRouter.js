@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 const pool= require("../db.js")
 
 const router = express.Router();
-router.use(bodyParser.json());
+// router.use(bodyParser.json());
 
 const SECRET =process.env.TOKEN_SECRET;
 

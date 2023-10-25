@@ -62,6 +62,52 @@ unique(email),
 <span>email,password,name yuboriladi token ham yubordim</span>
 
 </div>
+<div class="card">
+    <div class="link">/api/v1/cinema</div>
+   <pre>
+        "payment" text,
+        "type" text,
+        "year" INTEGER NOT NULL,
+        "title" text,
+        "more_loking" integer,
+        "time" integer,
+        "appearance" integer,
+        "ovoz_berdi" text,
+        "country" text,
+        "age_limit" integer,
+        "description" text,
+        "language" text,
+        "video" text,
+        "treler" text,
+        "Tayming" text,
+    </pre>
+    <span>GET,GET(id),POST,
+        PUT(id),DELETE(id)</span>
+    <ul>
+      <li>payment-pulli yokin tekin ekanni premiyum</li>
+      <li>year-yil</li>
+      <li>more_loking necha marotaba korilgani kiritilmidi get id qilinganda bittaga oshadi</li>
+      <li>time-korilgan vaqt</li>
+      <li>age_limit-korish yoshi</li>
+      <li>language-qaysi tilda</li>
+      <li>video-linki</li>
+      <li>treler-treler uchun video</li>
+      <li>Tayming bu Son Gun</li>
+      <li>appearance Full HD</li>
+      <li>type bosh kiritsa ham bo`ladi kiritmasa ham kiritmasa null qaytadi</li>
+    </ul>
+</div>
+<div class="card">
+    <div class="link">/api/v1/image_cinema</div>
+<span>kinoni rasmlari olib keladi </span>
+<pre>
+    "cinema_id" integer not null,
+    "image" text, 
+</pre>
+<span>GET,GET(id),POST,
+    PUT(id),DELETE(id)</span>
+</div>
+
 </div>
 
 
