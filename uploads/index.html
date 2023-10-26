@@ -17,12 +17,12 @@
         display: flex;
         justify-content: space-around;
         align-items: stretch;
-       
+        flex-wrap: wrap;
+        gap: 10px;
     }
     .card{
         width: 300px; 
         box-shadow: 0px 0px 3px rgba(128, 128, 128, 0.459);
-    
     }
     li{
         font-size: 13px;
@@ -32,7 +32,7 @@
 <body>
     
 <div class="cards">
-    <div class="card">
+<div class="card">
         <div class="link">/users</div>
         bu api faqat superdamin uchun, keyinchalik faqat superadmin true bo`lgan foydalanuvchiga ishlaydi holos
         <pre>
@@ -46,13 +46,13 @@ unique(email),
         </pre>
         <span>GET,POST,PUT,DELETE</span>
         <ul>
-            <li>ptichka- ptichkali userla bor ekan</li>
-            <li>superadmin - superadmin true bo`lsa u saytdagi hamma malumotni o`zgartria oladi</li>
-            <li>password-parolni shifrlangani</li>
-            <li>token-userga berilgan token</li>
-            <li>email- bitta email bir marta ishlatiladi holos </li>
+ <li>ptichka- ptichkali userla bor ekan</li>
+ <li>superadmin - superadmin true bo`lsa u saytdagi hamma malumotni o`zgartria oladi</li>
+ <li>password-parolni shifrlangani</li>
+ <li>token-userga berilgan token</li>
+ <li>email- bitta email bir marta ishlatiladi holos </li>
         </ul>
-    </div>
+</div>
 <div class="card">
     <div class="link">/user</div>
 <span>delete,get va put methodi bor. tokeni orqali aynan uni kimligini topib ish bajaradi</span>
@@ -104,9 +104,138 @@ unique(email),
     "cinema_id" integer not null,
     "image" text, 
 </pre>
+<ul>
+    <li>kino id si beriladi u qaysi kinoni rasmi enkanini bilish uchun</li>
+    <li>image-rasmni berish kerak link va file qabul qiladi</li>
+</ul>
 <span>GET,GET(id),POST,
     PUT(id),DELETE(id)</span>
+    <div class="link">/api/v1/aloqa</div>
+    <span>shunchaki aloqaga chiqqing deb qoldiriladi</span>
+    <pre>
+        "fullname" text,
+        "tema" text,
+        "message" text,
+        "email" text,
+    </pre>
+    <span>GET,GET(id),POST,
+        PUT(id),DELETE(id)</span>
+      
 </div>
+<div class="card">
+    <div class="link">/api/v1/janr</div>
+    <span>kino janrlari nomlari</span>
+    <pre>
+        "title" VARCHAR(50) NOT null,
+    </pre>
+    <span>GET,GET(id),POST,
+        PUT(id),DELETE(id)</span>
+        <div class="link">/api/v1/janr_cinema</div>
+        <span>janr va kinoni boglaydi</span>
+        <pre>
+ "cinema_id" integer not null,
+ "janr_id" integer not null,
+        </pre>
+        <span>GET,GET(id),POST,
+ PUT(id),DELETE(id)</span>
+</div>
+<div class="card">
+    <div class="link">/api/v1/tarjima_cinema</div>
+    <span>tarjimon va kinoni biriktiradi</span>
+    <pre>
+        "cinema_id" integer not null,
+        "tarjimon_id" integer not null,
+    </pre>
+    <span>GET,GET(id),POST,
+        PUT(id),DELETE(id)</span>
+        <div class="link">/api/v1/tarjima</div>
+        <span>tarjimon qoshadi</span>
+        <pre>
+ "full_name" VARCHAR (50),
+        </pre>
+        <span>GET,GET(id),POST,
+ PUT(id),DELETE(id)</span>
+ <div class="link">/api/v1/mark</div>
+ <span>tarjimon qoshadi</span>
+ <pre>
+     "full_name" VARCHAR (50),
+ </pre>
+ <span>GET,GET(id),POST,
+     PUT(id),DELETE(id)</span>
+</div>
+<div class="card">
+    <div class="link">/api/v1/tarjima_cinema</div>
+    <span>tarjimon va kinoni biriktiradi</span>
+    <pre>
+        "cinema_id" integer not null,
+        "tarjimon_id" integer not null,
+    </pre>
+    <span>GET,GET(id),POST,
+        PUT(id),DELETE(id)</span>
+        <div class="link">/api/v1/tarjima</div>
+        <span>tarjimon qoshadi</span>
+        <pre>
+ "full_name" VARCHAR (50),
+        </pre>
+        <span>GET,GET(id),POST,
+ PUT(id),DELETE(id)</span>
+ <div class="link">/api/v1/mark</div>
+ <span>tarjimon qoshadi</span>
+ <pre>
+     "cinema_id" integer,
+     "title" integer,
+ </pre>
+ <span>GET,GET(id),POST,
+     PUT(id),DELETE(id)</span>
+</div>
+
+<div class="card">
+    <div class="link">/api/v1/tarjima_cinema</div>
+    <span>tarjimon va kinoni biriktiradi</span>
+    <pre>
+        "cinema_id" integer not null,
+        "tarjimon_id" integer not null,
+    </pre>
+    <span>GET,GET(id),POST,
+        PUT(id),DELETE(id)</span>
+        <div class="link">/api/v1/tarjima</div>
+        <span>tarjimon qoshadi</span>
+        <pre>
+ "full_name" VARCHAR (50),
+        </pre>
+        <span>GET,GET(id),POST,
+ PUT(id),DELETE(id)</span>
+ <div class="link">/api/v1/mark</div>
+ <span>tarjimon qoshadi</span>
+ <pre>
+     "cinema_id" integer,
+     "title" integer,
+ </pre>
+ <span>GET,GET(id),POST,
+     PUT(id),DELETE(id)</span>
+</div>
+
+<div class="card">
+    <div class="link">/api/v1/comment</div>
+    <span>tarjimon va kinoni biriktiradi</span>
+    <pre>
+        "cinema_id" integer not null,
+        "supcomment" integer not null,
+        "description" text,
+        "creator" integer not null,
+    </pre>
+    <span>GET,GET(id),POST,
+        PUT(id),DELETE(id)</span>
+        <div class="link">/api/v1/comment_mark</div>
+        <span>tarjimon va kinoni biriktiradi</span>
+        <pre>
+"dislike" boolean default false not null,
+ "comment_id" integer not null,
+        </pre>
+        <span>GET,GET(id),POST,
+ PUT(id),DELETE(id)</span>
+</div>
+
 
 </div>
 

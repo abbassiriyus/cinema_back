@@ -38,7 +38,7 @@ create table comment(
 create table comment_mark(
        "id" serial primary key,
        "dislike" boolean default false not null ,
-        "comment_id" integer not null,
+       "comment_id" integer not null,
        "time_create" timestamp default current_timestamp not null,
        "time_update" timestamp default current_timestamp not null      
 );
@@ -69,6 +69,13 @@ create table tarjima_cinema(
         "time_create" timestamp default current_timestamp not null,
         "time_update" timestamp default current_timestamp not null
     );
+    create table janr_cinema(
+        "id" serial primary key,
+        "cinema_id" integer not null,
+        "janr_id" integer not null,
+        "time_create" timestamp default current_timestamp not null,
+        "time_update" timestamp default current_timestamp not null
+    );
 create table tarjima(
         "id" serial primary key,
         "full_name" VARCHAR (50),
@@ -77,7 +84,6 @@ create table tarjima(
     );
    create table janr(
         "id" serial primary key,
-        "cinema_id" integer not null,
         "title" VARCHAR(50) NOT null,
         "time_create" timestamp default current_timestamp not null,
         "time_update" timestamp default current_timestamp not null
@@ -97,7 +103,7 @@ create table users(
     "ptichka" boolean default false not null,
     "name" text,
     "token" text, 
-    unique(email),
+     unique(email),
     "superadmin" boolean default false not null,
     "time_create" timestamp default current_timestamp not null,
     "time_update" timestamp default current_timestamp not null
