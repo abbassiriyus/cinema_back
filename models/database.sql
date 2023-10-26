@@ -109,3 +109,13 @@ create table users(
     "time_update" timestamp default current_timestamp not null
     );
 
+create table seriallar(
+    "id" serial primary key,
+    "video" text,
+    "cinema_id" integer,
+    "title" text,
+    "more_loking" integer default 0 not null,
+    "time" integer,
+    "time_create" timestamp default current_timestamp not null,
+    "time_update" timestamp default current_timestamp not null
+)

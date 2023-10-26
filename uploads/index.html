@@ -94,7 +94,12 @@ unique(email),
       <li>treler-treler uchun video</li>
       <li>Tayming bu Son Gun</li>
       <li>appearance Full HD</li>
-      <li>type bosh kiritsa ham bo`ladi kiritmasa ham kiritmasa null qaytadi</li>
+      <li>type 
+        Film
+        Serial
+        Ongoing
+        OVA
+    </li>
     </ul>
 </div>
 <div class="card">
@@ -187,6 +192,19 @@ unique(email),
         </pre>
         <span>GET,GET(id),POST,
  PUT(id),DELETE(id)</span>
+</div>
+<div class="card">
+    <div class="link">/api/v1/seriallar</div>
+    <span>kino uchun seriallar</span>
+    <pre>
+"video" text,
+"cinema_id" integer,
+"title" text,
+"more_loking" integer default 0 not null,
+"time" integer,
+    </pre>
+    <span>GET,GET(id),POST,
+        PUT(id),DELETE(id)</span>
 </div>
 </div>
 
