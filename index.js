@@ -25,6 +25,7 @@ const fs=require('fs')
 app.use(fileUpload())
 // Body parser middleware
 app.use(bodyParser.json());
+app.use(express.static('./uploads'))
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(function (req, res, next) {
 
