@@ -13,6 +13,8 @@ const sharxRouter=require("./routes/sharxRouter.js")
 const tarjimaRouter=require("./routes/tarjimaRouter.js")
 const tarjima_cinemaRouter=require("./routes/tarjima_cinemaRouter.js")
 const serialarRouter=require("./routes/serialarRouter.js")
+const carousel=require("./routes/carousel.js")
+
 
 
 
@@ -69,6 +71,7 @@ app.use('/',image_cinemaRouter)
 app.use('/',janrRouter)
 app.use('/',markRouter)
 app.use('/',sharxRouter)
+app.use('/',carousel)
 app.use('/',tarjimaRouter)
 app.use('/',tarjima_cinemaRouter)
 app.use('/',serialarRouter)
@@ -77,9 +80,7 @@ app.use('/',serialarRouter)
 
 
 
-
-
-app.listen(4001, () => {
+app.listen(4002, () => {
     console.log('Сервер запущен')
     console.log('server started')
   })

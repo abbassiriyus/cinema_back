@@ -1,5 +1,6 @@
 const pool= require("../db.js")
-const express=require('express')
+const express=require('express');
+const  {getUserByTokenFromHeader, isBetweenStartAndEnd}= require("../middleware/Auth.js");
 const router = express.Router();
 
 // Create - POST method 
@@ -122,19 +123,84 @@ rows[i].images.push(image_data[j])
       res.status(500).json({ error: err.message });
     }
   });
-  router.get('/api/v1/cinema/:id', async (req, res) => {
+
+ router.get('/api/v1/cinema/:id', async (req, res) => {
     try {
       const { id } = req.params;
+      var data1= await getUserByTokenFromHeader(req)
       const { rows } = await pool.query('SELECT * FROM cinema WHERE id = $1', [id]);
       const image = await pool.query('SELECT * FROM image_cinema WHERE cinema_id = $1', [id]);
-      const data = await pool.query('UPDATE cinema SET  more_loking = $1 WHERE id = $2 RETURNING *',[rows[0].more_loking+1, id]) 
+      const janr_cinema = await pool.query('SELECT * FROM janr_cinema WHERE cinema_id = $1', [id]);
+      const janr = await pool.query('SELECT * FROM janr');
+      for (let i = 0; i < janr_cinema.rows.length; i++) {
+      for (let j = 0; j < janr.rows.length; j++) {
+     if(janr_cinema.rows[i].janr_id===janr.rows[j].id){
+      janr_cinema.rows[i].title=janr.rows[i].title
+     }  }} 
+      const mark = await pool.query('SELECT * FROM mark WHERE cinema_id = $1', [id]);
+      const tarjima_cinema = await pool.query('SELECT * FROM tarjima_cinema WHERE cinema_id = $1', [id]);
+      const tarjima = await pool.query('SELECT * FROM tarjima ');
+
+
+      for (let i = 0; i < tarjima_cinema.rows.length; i++) {
+        for (let j = 0; j < tarjima.rows.length; j++) {
+       if(tarjima_cinema.rows[i].tarjimon_id===tarjima.rows[j].id){
+        tarjima_cinema.rows[i].title=tarjima.rows[i].full_name
+       }  }}
+
+      const seriallar = await pool.query('SELECT * FROM seriallar WHERE cinema_id = $1', [id]);
+      const sharx = await pool.query('SELECT * FROM sharx WHERE cinema_id = $1', [id]);
+      const comment = await pool.query('SELECT * FROM comment WHERE cinema_id = $1', [id]);
+       pool.query('UPDATE cinema SET  more_loking = $1 WHERE id = $2 RETURNING *',[rows[0].more_loking+1, id]) 
+      const comment_mark = await pool.query('SELECT * FROM comment_mark ');
+for (let i = 0; i < comment.rows.length; i++) {
+comment.rows[i].top=0
+comment.rows[i].min=0
+for (let j = 0; j < comment_mark.rows.length; j++) {
+if(comment.rows[i].id===comment_mark.rows[j].comment_id){
+if(comment_mark.rows[j].dislike){
+comment.rows[i].top++
+}else{
+  comment.rows[i].min++
+}}}}
+rows[0].tarjima=tarjima_cinema.rows
+  rows[0].janr=janr_cinema.rows
       rows[0].allimage=image.rows
-      res.json(rows[0])
+      rows[0].mark=mark.rows
+      rows[0].seriallar=seriallar.rows
+      rows[0].sharx=sharx.rows
+      rows[0].comment=comment.rows
+if(data1){
+const paykino = await pool.query('SELECT * FROM paykino WHERE user_id = $1', [data1.id]);
+var bol=false
+
+for (let i = 0; i < paykino.rows.length; i++) {
+ if(isBetweenStartAndEnd(paykino.rows[i].start_day,paykino.rows[i].end_day)){
+bol=true}}
+if(bol || rows[0].payment!="Premium"){
+ res.json(rows[0])
+}else{
+rows[0].video=false
+  res.json(rows[0])
+}
+}else{
+  if(rows[0].payment!="Premium"){
+    res.json(rows[0])
+  }else{
+    rows[0].video=false
+    res.json(rows[0])
+  }
+}
+
+    
+     
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
   });
   
+
+
   router.put('/api/v1/cinema/:id', async (req, res) => {
     try {
       const { id } = req.params;

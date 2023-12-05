@@ -69,7 +69,7 @@ create table tarjima_cinema(
         "time_create" timestamp default current_timestamp not null,
         "time_update" timestamp default current_timestamp not null
     );
-    create table janr_cinema(
+create table janr_cinema(
         "id" serial primary key,
         "cinema_id" integer not null,
         "janr_id" integer not null,
@@ -82,7 +82,7 @@ create table tarjima(
         "time_create" timestamp default current_timestamp not null,
         "time_update" timestamp default current_timestamp not null
     );
-   create table janr(
+create table janr(
         "id" serial primary key,
         "title" VARCHAR(50) NOT null,
         "time_create" timestamp default current_timestamp not null,
@@ -118,4 +118,19 @@ create table seriallar(
     "time" integer,
     "time_create" timestamp default current_timestamp not null,
     "time_update" timestamp default current_timestamp not null
+)
+ 
+create table carousel(
+ "id" serial primary key,
+ "cinema_id" integer,
+ "time_create" timestamp default current_timestamp not null,
+ "time_update" timestamp default current_timestamp not null
+)
+create table paykino(
+ "id" serial primary key,
+ "user_id" integer not null,
+ "start_day" date not null,
+ "end_day" date not null,
+ "time_create" timestamp default current_timestamp not null,
+ "time_update" timestamp default current_timestamp not null
 )
