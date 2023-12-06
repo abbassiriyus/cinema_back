@@ -33,8 +33,7 @@ create table comment(
        "creator" integer not null,
        "time_create" timestamp default current_timestamp not null,
        "time_update" timestamp default current_timestamp not null
-
-);
+ );
 create table comment_mark(
        "id" serial primary key,
        "dislike" boolean default false not null ,
