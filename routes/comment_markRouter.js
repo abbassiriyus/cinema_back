@@ -5,8 +5,8 @@ const router = express.Router();
 
 router.post('/api/v1/comment_mark', async (req, res) => {
     try {
-      const { dislike, comment_id } = req.body;
-      const newMark = await pool.query('INSERT INTO comment_mark (dislike, comment_id) VALUES ($1, $2) RETURNING *', [dislike, comment_id]);
+      const { dislike, comment_id,creator } = req.body;
+      const newMark = await pool.query('INSERT INTO comment_mark (dislike, comment_id,creator) VALUES ($1, $2, $3) RETURNING *', [dislike, comment_id,creator]);
       res.json(newMark.rows[0]);
     } catch (err) {
       res.status(500).json({ error: err.message });
