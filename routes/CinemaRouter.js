@@ -134,7 +134,7 @@ router.get('/api/v1/cinema/:id', async (req, res) => {
     const image = await pool.query('SELECT * FROM image_cinema WHERE cinema_id = $1', [id]);
     const janr_cinema = await pool.query('SELECT * FROM janr_cinema WHERE cinema_id = $1', [id]);
     const sharx = await pool.query('SELECT * FROM sharx WHERE cinema_id = $1', [id]);
-    const users = await pool.query('SELECT email,name,id FROM users')
+    const users = await pool.query('SELECT email,name,id,ptichka FROM users')
     const janr = await pool.query('SELECT * FROM janr');
 
     for (let i = 0; i < janr_cinema.rows.length; i++) {
@@ -202,8 +202,8 @@ router.get('/api/v1/cinema/:id', async (req, res) => {
     for (let j = 0; j < commment_org.length; j++) {
       commment_org[j].subcomment = []
       for (let i = 0; i < comment.rows.length; i++) {
-        if (commment_org[j].supcomment == comment.rows[i].id) {
-          commment_org[j].subcomment = comment.rows[i]
+        if (commment_org[j].id==comment.rows[i].supcomment) {
+          commment_org[j].subcomment.push(comment.rows[i])
         }
       }
 

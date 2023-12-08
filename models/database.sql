@@ -30,6 +30,7 @@ create table comment(
        "cinema_id" integer not null,
        "supcomment" integer not null,
        "description" text,
+       "quanty" boolean default false not null,
        "creator" integer not null,
        "time_create" timestamp default current_timestamp not null,
        "time_update" timestamp default current_timestamp not null
