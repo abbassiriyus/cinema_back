@@ -21,6 +21,14 @@ router.get('/', async (req, res) => {
       'SELECT * FROM look_me WHERE user_id = $1 ORDER BY time_update DESC',
       [user_id]
     );
+    const sharx = await pool.query(
+      'SELECT * FROM sharx WHERE creator = $1 ORDER BY time_update DESC',
+      [user_id]
+    );
+    const fikr = await pool.query(
+      'SELECT * FROM comment WHERE creator = $1 ORDER BY time_update DESC',
+      [user_id]
+    );
     const result2 = await pool.query('SELECT * FROM cinema');
     const result3 = await pool.query('SELECT * FROM mark');
     for (let i = 0; i < result2.rows.length; i++) {
@@ -31,19 +39,24 @@ if(result2.rows[i].id){
 }        
     }
     } 
-    for (let i = 0; i < result1.rows.length; i++) {
+for (let i = 0; i < result1.rows.length; i++) {
 for (let j = 0; j < result2.rows.length; j++) {
 if(result1.rows[i].cinema_id==result2.rows[j].id){
 result1.rows[i].title=result2.rows[j].title
 result1.rows[i].appearance=result2.rows[j].appearance
 result1.rows[i].mark=result2.rows[j].mark
 }
-}
-      
-    }
+}}
+for (let i = 0; i < sharx.rows.length; i++) {
+  for (let j = 0; j < result2.rows.length; j++) {
+  if(sharx.rows[i].cinema_id==result2.rows[j].id){
+  sharx.rows[i].titlea=result2.rows[j].title
+  sharx.rows[i].appearance=result2.rows[j].appearance
+  sharx.rows[i].mark=result2.rows[j].mark
+  }
+  }}
 
-
-    res.json(result1.rows);
+    res.json({all:result1.rows,sharx:sharx.rows,fikr:fikr.rows.length});
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ error: 'Serverda xatolik yuz berdi' });

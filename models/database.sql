@@ -11,6 +11,7 @@
         "country" text,
         "age_limit" integer,
         "description" text,
+        "looking" boolean default false not null,
         "language" text,
         "video" text,
         "treler" text,

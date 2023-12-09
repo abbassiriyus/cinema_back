@@ -263,6 +263,17 @@ router.put('/api/v1/cinema/:id', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+router.put('/api/v1/cinema/look/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const {looking} = req.body;
+    const { rows } = await pool.query('UPDATE cinema SET looking=$1, time_update = CURRENT_TIMESTAMP WHERE id = $2 RETURNING *',
+      [looking,id]);
+    res.json(rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 router.delete('/api/v1/cinema/:id', async (req, res) => {
   try {
