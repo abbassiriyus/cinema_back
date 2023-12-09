@@ -173,11 +173,7 @@ router.post('/users', (req, res) => {
 router.get('/users', (req, res) => {
     pool.query('SELECT * FROM users')
      .then((data) => {
-         res.status(200).json({
-             status: 'success',
-             data: data.rows,
-             message: 'Retrieved ALL users'
-         });
+         res.status(200).json(data.rows);
      })
      .catch((error) => {
          return next(error);
