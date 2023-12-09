@@ -3,7 +3,7 @@ const pool = require('../db'); // Assuming you have a 'db.js' file setting up yo
 const router = express.Router();
 
 
-router.post('/api/v1/comment_mark', async (req, res) => {
+  router.post('/api/v1/comment_mark', async (req, res) => {
     try {
       const { dislike, comment_id,creator } = req.body;
       const newMark = await pool.query('INSERT INTO comment_mark (dislike, comment_id,creator) VALUES ($1, $2, $3) RETURNING *', [dislike, comment_id,creator]);
@@ -11,7 +11,7 @@ router.post('/api/v1/comment_mark', async (req, res) => {
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
-  });
+   });
   
   router.get('/api/v1/comment_mark', async (req, res) => {
     try {
@@ -53,9 +53,5 @@ router.post('/api/v1/comment_mark', async (req, res) => {
     }
   });
   
-
-
-
-
 
 module.exports=router

@@ -136,3 +136,11 @@ create table paykino(
  "time_create" timestamp default current_timestamp not null,
  "time_update" timestamp default current_timestamp not null
 )
+create table look_me(
+ "id" serial primary key,
+ "cinema_id" integer not null,
+ "user_id" integer not null,
+ unique(cinema_id, user_id)
+ "time_create" timestamp default current_timestamp not null,
+ "time_update" timestamp default current_timestamp not null
+)

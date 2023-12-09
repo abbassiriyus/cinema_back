@@ -61,7 +61,7 @@ res.status(200).send(data)
 })
 
 
-
+app.use('/api/lookme', require('./routes/lookMeRouter'));
 app.use('/',userRouter)
 app.use('/',aloqaRouter)
 app.use('/',CinemaRouter)
