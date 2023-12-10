@@ -17,7 +17,7 @@ router.post('/register', async (req, res) => {
       // add some basic validation
       if(!name || !email || !password) throw new Error('All fields are required.');    
   
-      const hashedPassword = await bcrypt.hash(password, 10);
+      const hashedPassword = password
       const user = {
         name: name,
         email: email,
@@ -35,7 +35,7 @@ router.post('/register', async (req, res) => {
     }
   });
 
-  router.post('/login', async (req, res) => {
+router.post('/login', async (req, res) => {
     try {
       const { email, password } = req.body;
     
@@ -52,8 +52,8 @@ router.post('/register', async (req, res) => {
       }
   
       // Compare passwords
-      const passwordMatch = await bcrypt.compare(password, user.password);
-      if (!passwordMatch){
+      // const passwordMatch = await bcrypt.compare(password,);
+      if (password!=user.password){
         return res.status(400).json({ error: 'Incorrect password.' });
       }
   
@@ -69,10 +69,9 @@ router.post('/register', async (req, res) => {
         res.status(400).json({ error: err.message });
     }
   });
-  router.get('/user', async (req, res) => {
-    // Token "Authorization" sarlavhasi orqali olinadi. Bunday sarlavha yo'q bo'lsa, xatolik qaytariladi.
+router.get('/user', async (req, res) => {
     const token = req.header('authorization').split(' ')[1];
-  console.log(token);
+     console.log(token);
     if (!token) {
       return res.status(403).json({ error: 'Token is required.' });
     }
@@ -97,7 +96,7 @@ router.post('/register', async (req, res) => {
       res.status(400).json({ error: err.message });
     }
   });
-  router.delete('/user', async (req, res) => {
+router.delete('/user', async (req, res) => {
     const token = req.header('authorization').split(' ')[1];
   
     if (!token) {
@@ -193,6 +192,48 @@ router.put('/users/:id', (req, res) => {
      .catch((error) => {
          return next(error);
      })
+});
+
+router.put('/user_one/:id', (req, res) => {
+  pool.query('UPDATE users SET email=$1,name=$2,familiya=$3 WHERE id = $4', 
+  [req.body.email,req.body.name,req.body.familiya, parseInt(req.params.id)])
+   .then(() => {
+       res.status(200).json({
+           status: 'success',
+           message: 'Updated user'
+       });
+   })
+   .catch((error) => {
+       return next(error);
+   })
+});
+
+
+router.put('/reset/:id', async (req, res) => {
+
+  var {old_password,password,repit_password}=req.body
+const user_id =req.params.id
+
+  const result1 = await pool.query(
+    'SELECT * FROM users WHERE id = $1 AND password = $2',
+    [user_id,old_password]
+  );
+if(result1.rows.length==1 && repit_password==password){
+ pool.query('UPDATE users SET password=$1 WHERE id = $2', 
+  [req.body.password,user_id])
+   .then(() => {
+       res.status(200).json({
+           status: 'success',
+           message: 'Updated user'
+       });
+   })
+   .catch((error) => {
+    res.status(400).send(error.message)
+   })
+}else{
+res.status(400).send("not update")
+}
+ 
 });
 
 // Delete -> DELETE request

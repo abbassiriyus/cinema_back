@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../db'); // PostgreSQL ma'lumotlar omboriga ulanish
-
+const { isBetweenStartAndEnd } =require("../middleware/Auth")
 // Ma'lumotlarni olish
 router.get('/', async (req, res) => {
   try {
@@ -23,6 +23,10 @@ router.get('/', async (req, res) => {
     );
     const sharx = await pool.query(
       'SELECT * FROM sharx WHERE creator = $1 ORDER BY time_update DESC',
+      [user_id]
+    );
+    const paykino = await pool.query(
+      'SELECT * FROM paykino WHERE user_id = $1 ORDER BY time_update DESC',
       [user_id]
     );
     const fikr = await pool.query(
@@ -56,7 +60,7 @@ for (let i = 0; i < sharx.rows.length; i++) {
   }
   }}
 
-    res.json({all:result1.rows,sharx:sharx.rows,fikr:fikr.rows.length});
+    res.json({all:result1.rows,sharx:sharx.rows,fikr:fikr.rows.length,pay:isBetweenStartAndEnd()});
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ error: 'Serverda xatolik yuz berdi' });

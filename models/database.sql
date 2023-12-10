@@ -103,6 +103,7 @@ create table users(
     "id" serial primary key,
     "email" VARCHAR (50),
     "password" text,
+    "familiya" text,
     "ban" boolean default true not null,
     "ptichka" boolean default false not null,
     "name" text,
