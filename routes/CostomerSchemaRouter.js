@@ -237,16 +237,25 @@ res.status(400).send("not update")
 });
 
 // Delete -> DELETE request
-router.delete('/users/:id', (req, res) => {
-    pool.query('DELETE FROM users WHERE id = $1', parseInt(req.params.id))
-     .then((result) => {
-         res.status(200).json({
-             status: 'success',
-             message: `Removed ${result.rowCount} user`
-         });
-     })
-     .catch((error) => {
-         return next(error);
-     });
+// router.delete('/users/:id', (req, res) => {
+//     pool.query('DELETE FROM users WHERE id = $1', parseInt(req.params.id))
+//      .then((result) => {
+//          res.status(200).json({
+//              status: 'success',
+//              message: `Removed ${result.rowCount} user`
+//          });
+//      })
+//      .catch((error) => {
+//         res.status(500).json({error:error.message})
+//      });
+// });
+router.delete('/users/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { rows } = await pool.query('DELETE FROM users WHERE id = $1 RETURNING *', [id]);
+    res.json(rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 module.exports=router
