@@ -147,7 +147,7 @@ router.get('/api/v1/cinema/:id', async (req, res) => {
     const marks = await pool.query('SELECT * FROM mark WHERE cinema_id = $1', [id]);
     var mark = 10
     for (let i = 0; i < marks.rows.length; i++) {
-      mark = (marks.rows[i] + mark) / 2
+      mark = (marks.rows[i].title + mark) / 2
     }
     for (let i = 0; i < sharx.rows.length; i++) {
       for (let j = 0; j < users.rows.length; j++) {
