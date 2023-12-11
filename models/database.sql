@@ -27,7 +27,7 @@
        "time_update" timestamp default current_timestamp not null
     );
 create table comment(
-      "id" serial primary key,
+       "id" serial primary key,
        "cinema_id" integer not null,
        "supcomment" integer not null,
        "description" text,
