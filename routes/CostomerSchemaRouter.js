@@ -258,4 +258,20 @@ router.delete('/users/:id', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+  // Update
+  router.put('/panu/:id', async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { pan } = req.body;
+      
+      const updateEntry = await pool.query(
+        'UPDATE users SET pan = $1 WHERE id = $2 RETURNING *',
+        [pan, id]
+      );
+      res.json(updateEntry.rows[0]);
+    } catch (err) {
+      res.status(400).send('error')
+    }
+  });
 module.exports=router
