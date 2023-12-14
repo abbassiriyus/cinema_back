@@ -197,8 +197,8 @@ router.get('/users', (req, res) => {
 
 // Update -> PUT request
 router.put('/users/:id', (req, res) => {
-  pool.query('UPDATE users SET email=$1, password=$2, ptichka=$3, name=$4, superadmin=$5 WHERE id = $6',
-    [req.body.email, req.body.password, req.body.ptichka, req.body.name, req.body.superadmin, parseInt(req.params.id)])
+  pool.query('UPDATE users SET email=$1, familiya=$2,  name=$3, superadmin=$4 WHERE id = $5',
+    [req.body.email, req.body.familiya,req.body.name, req.body.superadmin, parseInt(req.params.id)])
     .then(() => {
       res.status(200).json({
         status: 'success',
