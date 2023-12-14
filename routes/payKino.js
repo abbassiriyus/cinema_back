@@ -8,7 +8,7 @@ const { isBetweenStartAndEnd } = require('../middleware/Auth');
 router.post('/', async (req, res) => {
     try {
       const {user_id,month} = req.body;
-      const allPaykino = await pool.query('SELECT * FROM paykino WHERE id = $1', [user_id]);
+      const allPaykino = await pool.query('SELECT * FROM paykino WHERE user_id = $1', [user_id*1]);
       console.log(allPaykino.rows,user_id);
       
 
