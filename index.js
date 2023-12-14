@@ -14,6 +14,8 @@ const tarjimaRouter=require("./routes/tarjimaRouter.js")
 const tarjima_cinemaRouter=require("./routes/tarjima_cinemaRouter.js")
 const serialarRouter=require("./routes/serialarRouter.js")
 const carousel=require("./routes/carousel.js")
+const payKino=require("./routes/payKino.js")
+
 
 
 
@@ -60,7 +62,7 @@ app.get('/doc', (_req, res) => {
 res.status(200).send(data)
 })
 
-
+app.use('/api/pay',payKino)
 app.use('/api/lookme', require('./routes/lookMeRouter'));
 app.use('/',userRouter)
 app.use('/',aloqaRouter)
