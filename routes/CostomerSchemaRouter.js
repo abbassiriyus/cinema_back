@@ -172,10 +172,25 @@ router.post('/users', (req, res) => {
 router.get('/users', (req, res) => {
     pool.query('SELECT * FROM users')
      .then((data) => {
-         res.status(200).json(data.rows);
+pool.query('SELECT * FROM paykino').then(res=>{
+for (let i = 0; i < data.rows.length; i++) {
+  data.rows[i].pay=false
+for (let j = 0; j < res.rows.length; j++) {
+if(data.rows[i].id===res.rows[j].user_id && isBetweenStartAndEnd(res.rows[j].start_day,res.rows[j].end_day)){
+  data.rows[i].pay=true
+}
+  
+}
+}
+
+}).catch(err=>{
+  res.status(400).send("error")
+
+})
+ res.status(200).json(data.rows);
      })
      .catch((error) => {
-         return next(error);
+         res.status(400).send("error")
      });
 });
 
