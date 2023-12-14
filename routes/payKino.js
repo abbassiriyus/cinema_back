@@ -1,20 +1,51 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../db'); // PostgreSQL pool connection
+const { isBetweenStartAndEnd } = require('../middleware/Auth');
 
 
 // Create 
 router.post('/', async (req, res) => {
     try {
       const {user_id,month} = req.body;
-
       const allPaykino = await pool.query('SELECT * FROM paykino WHERE id = $1', [user_id]);
-console.log(allPaykino);
+      console.log(allPaykino.rows,user_id);
+      
 
-      // start_day ni hozirgi vaqtga sozlaymiz
+
+      if (allPaykino.rows.length==1) {
+        if(isBetweenStartAndEnd(allPaykino.rows[0].start_day,allPaykino.rows[0].end_day)){
+            const currentDate =allPaykino.rows[0].end_day;
+            console.log(currentDate);
+            const formattedStartDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+           
+            const formattedEndDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + month, currentDate.getDate());
+        
+            // Yuborilgan ma'lumotlarni bazaga qo'shish
+            const newPaykino = await pool.query(
+              'UPDATE paykino SET user_id = $1, start_day = $2, end_day = $3, time_update = current_timestamp WHERE id = $4 RETURNING *',
+              [user_id, formattedStartDay, formattedEndDay,allPaykino.rows[0].id]
+            );
+            res.status(200).json("newPaykino.rows[0]");
+        }else{
+            const currentDate = new Date();
+            console.log(currentDate);
+            const formattedStartDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+           
+            const formattedEndDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + month, currentDate.getDate());
+        
+            // Yuborilgan ma'lumotlarni bazaga qo'shish
+            const newPaykino = await pool.query(
+              'UPDATE paykino SET user_id = $1, start_day = $2, end_day = $3, time_update = current_timestamp WHERE id = $4 RETURNING *',
+              [user_id, formattedStartDay, formattedEndDay,allPaykino.rows[0].id]
+            );
+            res.status(200).json("newPaykino.rows[0]");
+        }
+      }else{
       const currentDate = new Date();
+      console.log(currentDate);
       const formattedStartDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
-      // end_day ni start_day dan `month` oydan keyin qo'yamiz
+     
       const formattedEndDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + month, currentDate.getDate());
   
       // Yuborilgan ma'lumotlarni bazaga qo'shish
@@ -22,8 +53,8 @@ console.log(allPaykino);
         'INSERT INTO paykino (user_id, start_day, end_day) VALUES ($1, $2, $3) RETURNING *',
         [user_id, formattedStartDay, formattedEndDay]
       );
-  
-      res.json(newPaykino.rows[0]);
+      res.status(200).json("newPaykino.rows[0]");
+      }
     } catch (error) {
       console.error(error.message);
       res.status(500).send('Serverda xatolik');
