@@ -82,7 +82,7 @@ app.use('/',serialarRouter)
 
 
 
-app.listen(4003, () => {
+app.listen(4002, () => {
     console.log('Сервер запущен')
     console.log('server started')
   })

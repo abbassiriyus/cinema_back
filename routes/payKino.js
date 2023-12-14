@@ -23,8 +23,8 @@ router.post('/', async (req, res) => {
         
             // Yuborilgan ma'lumotlarni bazaga qo'shish
             const newPaykino = await pool.query(
-              'UPDATE paykino SET user_id = $1, start_day = $2, end_day = $3, time_update = current_timestamp WHERE id = $4 RETURNING *',
-              [user_id, formattedStartDay, formattedEndDay,allPaykino.rows[0].id]
+              'UPDATE paykino SET user_id = $1, end_day = $2, time_update = current_timestamp WHERE id = $3 RETURNING *',
+              [user_id, formattedEndDay,allPaykino.rows[0].id]
             );
             res.status(200).json("newPaykino.rows[0]");
         }else{
