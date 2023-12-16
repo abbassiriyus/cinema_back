@@ -24,12 +24,16 @@ router.post('/register', async (req, res) => {
       email: email,
       password: hashedPassword
     }
-    const jwtToken = jwt.sign(user, SECRET, { expiresIn: '1h' });
+    const jwtToken = jwt.sign(user, SECRET);
 
-    await pool.query('INSERT INTO users (email,password,name,token) VALUES ($1, $2, $3, $4 )', [email, hashedPassword, name, jwtToken]);
-
-    res.json({ token: jwtToken, message: 'Registered successfully!' });
-
+    var { rows }=await pool.query('INSERT INTO users (email,password,name,token) VALUES ($1, $2, $3, $4 ) RETURNING *', [email, hashedPassword, name, jwtToken]);
+    console.log(rows);
+    res.json({ token: jwtToken, data:rows});
+    // const newEntry = await pool.query(
+    //   'INSERT INTO janr (cinema_id, title) VALUES ($1, $2) RETURNING *',
+    //   [cinema_id, title]
+    // );
+    // res.json(newEntry.rows[0]);
   } catch (err) {
     // set status code to 400 for client errors and provide error message
     res.status(400).json({ error: err.message });
