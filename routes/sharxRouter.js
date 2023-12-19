@@ -9,9 +9,9 @@ router.post('/api/v1/sharx', async (req, res) => {
         'INSERT INTO sharx (cinema_id, description, rating, title, creator) VALUES ($1, $2, $3, $4, $5) RETURNING *',
         [cinema_id, description, rating, title, creator]
       );
-      res.json(newSharx.rows[0]);
+      res.status(200).json(newSharx.rows[0]);
     } catch (err) {
-      console.error(err.message);
+    res.status(400).send(err.message)
     }
   });
   
@@ -21,7 +21,7 @@ router.post('/api/v1/sharx', async (req, res) => {
       const allSharx = await pool.query('SELECT * FROM sharx');
       res.json(allSharx.rows);
     } catch (err) {
-      console.error(err.message);
+    res.status(400).send(err.message)
     }
   });
   
@@ -32,7 +32,7 @@ router.post('/api/v1/sharx', async (req, res) => {
       const sharx = await pool.query('SELECT * FROM sharx WHERE id = $1', [id]);
       res.json(sharx.rows[0]);
     } catch (err) {
-      console.error(err.message);
+    res.status(400).send(err.message)
     }
   });
   
@@ -48,7 +48,7 @@ router.post('/api/v1/sharx', async (req, res) => {
   
       res.json(updateSharx.rows[0]);
     } catch (err) {
-      console.error(err.message);
+    res.status(400).send(err.message)
     }
   });
   
@@ -59,7 +59,7 @@ router.post('/api/v1/sharx', async (req, res) => {
       const deleteSharx = await pool.query('DELETE FROM sharx WHERE id = $1 RETURNING *', [id]);
       res.json(deleteSharx.rows[0]);
     } catch (err) {
-      console.error(err.message);
+    res.status(400).send(err.message)
     }
   });
   

@@ -294,4 +294,5 @@ router.put('/panu/:id', async (req, res) => {
     res.status(400).send('error')
   }
 });
+router.post('/')
 module.exports = router
