@@ -4,12 +4,39 @@ const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const pool = require("../db.js");
-const { isBetweenStartAndEnd } = require('../middleware/Auth.js');
+const { isBetweenStartAndEnd,sendEmail } = require('../middleware/Auth.js');
 
 const router = express.Router();
 // router.use(bodyParser.json());
 
 const SECRET = process.env.TOKEN_SECRET;
+
+router.post('/send-email', async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    // PostgreSQL veritabanından kullanıcıyı sorgula
+    const query = 'SELECT * FROM users WHERE email = $1';
+    const result = await pool.query(query, [email]);
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: 'Kullanıcı bulunamadı.' });
+    }
+
+    const user = result.rows[0];
+    const {  password } = user;
+    // E-posta gönderme işlemini gerçekleştirin
+    sendEmail(email,password);
+
+    res.sendStatus(200);
+  } catch (error) {
+    console.error('Veritabanı hatası:', error);
+    res.sendStatus(500);
+  }
+});
+
+
+
 
 router.post('/register', async (req, res) => {
   try {

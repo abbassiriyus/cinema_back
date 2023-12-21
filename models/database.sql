@@ -148,5 +148,5 @@ create table look_me(
  "time_update" timestamp default current_timestamp not null
 );
 
-ALTER SEQUENCE sharx_id_seq OWNED BY sharx.id;
-GRANT USAGE, SELECT ON SEQUENCE sharx_id_seq TO uzdubuz_id_rsa;
+ALTER SEQUENCE image_cinema_id_seq OWNED BY image_cinema.id;
+GRANT USAGE, SELECT ON SEQUENCE image_cinema_id_seq TO uzdubuz_id_rsa;

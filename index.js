@@ -12,6 +12,8 @@ const markRouter=require("./routes/markRouter.js")
 const sharxRouter=require("./routes/sharxRouter.js")
 const tarjimaRouter=require("./routes/tarjimaRouter.js")
 const tarjima_cinemaRouter=require("./routes/tarjima_cinemaRouter.js")
+const janr_cinemaRouter=require("./routes/janr_cinemaRouter.js")
+
 const serialarRouter=require("./routes/serialarRouter.js")
 const carousel=require("./routes/carousel.js")
 const payKino=require("./routes/payKino.js")
@@ -76,6 +78,8 @@ app.use('/',sharxRouter)
 app.use('/',carousel)
 app.use('/',tarjimaRouter)
 app.use('/',tarjima_cinemaRouter)
+app.use('/',janr_cinemaRouter)
+
 app.use('/',serialarRouter)
 
 
