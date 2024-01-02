@@ -189,7 +189,7 @@ router.put('/user', async (req, res) => {
   }
 });
 router.post('/users', (req, res) => {
-  pool.query('INSERT INTO users(email, password, ptichka, name, superadmin) VALUES($1, $2, $3, $4, $5)', [req.body.email, req.body.password, req.body.ptichka, req.body.name, req.body.superadmin])
+  pool.query('INSERT INTO users (email, password, ptichka, name, superadmin) VALUES ($1, $2, $3, $4, $5) RETURNING *', [req.body.email, req.body.password, req.body.ptichka, req.body.name, req.body.superadmin])
     .then(() => {
       res.status(200).json({
         status: 'success',
