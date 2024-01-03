@@ -14,17 +14,7 @@ const SECRET = process.env.TOKEN_SECRET;
 router.post('/send-message', async (req, res) => {
   const { email,ism,mavzu,xabar } = req.body;
   try {
-    // PostgreSQL veritabanından kullanıcıyı sorgula
-    const query = 'SELECT * FROM users WHERE email = $1';
-    const result = await pool.query(query, [email]);
 
-    if (result.rowCount === 0) {
-      return res.status(404).json({ error: 'Kullanıcı bulunamadı.' });
-    }
-
-    const user = result.rows[0];
-    const {  password } = user;
-    // E-posta gönderme işlemini gerçekleştirin
  const transporter = nodemailer.createTransport({
       pool: true,
      service: "gmail",
@@ -33,7 +23,6 @@ router.post('/send-message', async (req, res) => {
         pass: 'fbcgnvqfbmocflcm',
      },
       tls: {
-        // do not fail on invalid certs
         rejectUnauthorized: false
     },
     });
@@ -41,7 +30,7 @@ router.post('/send-message', async (req, res) => {
       from: 'uzdub.group@gmail.com',
       to: 'uzdub.group@gmail.com',
       subject: 'aloqaga chiqing',
-      text: `sizga yuborilgan email: ${email};ismi:${ism},maqsadi:${xabar},mavzusi:${mavzu}`,
+      html: `sizga yuborilgan email: ${email} <br> ismi: ${ism} <br> maqsadi: ${xabar} <br> mavzusi: ${mavzu}`,
     };
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
