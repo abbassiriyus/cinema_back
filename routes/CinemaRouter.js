@@ -131,7 +131,7 @@ router.get('/api/v1/cinema/:id', async (req, res) => {
     const { id } = req.params;
     var data1 = await getUserByTokenFromHeader(req)
     const { rows } = await pool.query('SELECT * FROM cinema WHERE id = $1', [id]);
-    const image = await pool.query('SELECT * FROM image_cinema WHERE cinema_id = $1', [id]);
+    const image = await pool.query('SELECT * FROM image_cinema WHERE cinema_id = $1 ORDER BY id', [id]);
     const janr_cinema = await pool.query('SELECT * FROM janr_cinema WHERE cinema_id = $1', [id]);
     const sharx = await pool.query('SELECT * FROM sharx WHERE cinema_id = $1', [id]);
     const users = await pool.query('SELECT email,name,id,ptichka FROM users')
