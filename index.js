@@ -1,6 +1,11 @@
 const express = require('express')
 const app = express()
 const connectDB = require('./config/database.js')
+
+
+
+
+
 const userRouter = require('./routes/CostomerSchemaRouter.js')
 const aloqaRouter=require("./routes/aloqaRouter.js")
 const CinemaRouter=require("./routes/CinemaRouter.js")
