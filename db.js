@@ -8,10 +8,10 @@ const pool = new Client({
     port: 5619
 })
 // const pool = new Client({
-//     user: "uzdubuz_id_rsa",
-//     host: "clocalhost",
-//     database: "uzdubuz_test",
-//     password: "o$n;y)_HLGwM",
+//     user: "abbasuz1_abbas",
+//     host: "localhost",
+//     database: "abbasuz1_new",
+//     password: "e}THGjp4j6Y_",
 //     port: 5619
 // })
 pool.connect(err => {
